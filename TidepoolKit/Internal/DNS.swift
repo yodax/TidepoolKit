@@ -47,13 +47,29 @@ class DNS {
         var records: [DNSSRVRecord] = []
 
         let serviceRef: UnsafeMutablePointer<DNSServiceRef?> = UnsafeMutablePointer.allocate(capacity: MemoryLayout<DNSServiceRef>.size)
-        let callback: DNSServiceQueryRecordReply = { (_, _, _, _, _, _, _, rdlen, rdata, _, context) -> Void in
-            context?.assumingMemoryBound(to: DNSSRVRecordHandler.self).pointee(DNSSRVRecord(data: Data(bytes: rdata!, count: Int(rdlen))))
+        let callback: DNSServiceQueryRecordReply = { (_, _, _, errorCode, _, _, _, rawDataLength, rawData, _, context) -> Void in
+            context?.assumingMemoryBound(to: DNSSRVRecordHandler.self).pointee(errorCode, rawDataLength, rawData)
         }
-        var handler: DNSSRVRecordHandler = { records.append($0) }
+        var handlerError: DNSError?
+        var handler: DNSSRVRecordHandler = { (errorCode, rawDataLength, rawData) in
+            guard handlerError == nil else {
+                return
+            }
+            guard errorCode == kDNSServiceErr_NoError else {
+                handlerError = .error(errorCode, nil)
+                return
+            }
+            guard let rawData = rawData, rawDataLength > 0 else {
+                return
+            }
+            records.append(DNSSRVRecord(data: Data(bytes: rawData, count: Int(rawDataLength))))
+        }
 
         // Pass handler as context to callback so that we have a way to pass the record result back to the caller
-        DNSServiceQueryRecord(serviceRef, 0, 0, domainName, UInt16(kDNSServiceType_SRV), UInt16(kDNSServiceClass_IN), callback, &handler)
+        let errorCode = DNSServiceQueryRecord(serviceRef, 0, 0, domainName, UInt16(kDNSServiceType_SRV), UInt16(kDNSServiceClass_IN), callback, &handler)
+        if errorCode != kDNSServiceErr_NoError {
+            completion(.failure(.error(errorCode, nil)))
+        }
 
         let serviceRefSockFD = DNSServiceRefSockFD(serviceRef.pointee)
         var serviceRefSockFDSet = fd_set()
@@ -67,8 +83,14 @@ class DNS {
         case 0:
             completion(.failure(DNSError.timeout))
         default:
-            DNSServiceProcessResult(serviceRef.pointee)
-            completion(.success(records))
+            let errorCode = DNSServiceProcessResult(serviceRef.pointee)
+            if errorCode != kDNSServiceErr_NoError {
+                completion(.failure(.error(errorCode, nil)))
+            } else if let handlerError = handlerError {
+                completion(.failure(handlerError))
+            } else {
+                completion(.success(records))
+            }
         }
 
         DNSServiceRefDeallocate(serviceRef.pointee)
@@ -149,7 +171,7 @@ class DNS {
         }
     }
 
-    private typealias DNSSRVRecordHandler = (DNSSRVRecord) -> Void
+    private typealias DNSSRVRecordHandler = (DNSServiceErrorType, UInt16, UnsafeRawPointer?) -> Void
 }
 
 private extension DNSSRVRecord {

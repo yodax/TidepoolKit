@@ -8,9 +8,9 @@
 
 struct DataResponse: Codable {
     var data: [TDatum]
-    var malformed: [Int: [String: Any]]
+    var malformed: TAPI.MalformedResult
 
-    init(data: [TDatum] = [], malformed: [Int: [String: Any]] = [:]) {
+    init(data: [TDatum] = [], malformed: TAPI.MalformedResult = [:]) {
         self.data = data
         self.malformed = malformed
     }
@@ -38,7 +38,7 @@ struct DataResponse: Codable {
             } catch let error {
                 TSharedLogging.error((error as CustomDebugStringConvertible).debugDescription)
                 let malformedContainer = try superDecoder.container(keyedBy: JSONCodingKeys.self)
-                malformed[container.currentIndex] = try malformedContainer.decode([String: Any].self)
+                malformed[String(container.currentIndex)] = try malformedContainer.decode([String: Any].self)
             }
         }
     }
