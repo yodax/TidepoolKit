@@ -72,6 +72,8 @@ class TControllerSettingsDatumNotificationsTests: XCTestCase {
                                                                       badge: true,
                                                                       sound: true,
                                                                       announcement: false,
+                                                                      timeSensitive: true,
+                                                                      scheduledDelivery: false,
                                                                       notificationCenter: false,
                                                                       lockScreen: false,
                                                                       alertStyle: .alert)
@@ -82,6 +84,8 @@ class TControllerSettingsDatumNotificationsTests: XCTestCase {
         "badge": true,
         "sound": true,
         "announcement": false,
+        "timeSensitive": true,
+        "scheduledDelivery": false,
         "notificationCenter": false,
         "lockScreen": false,
         "alertStyle": "alert"
@@ -95,6 +99,8 @@ class TControllerSettingsDatumNotificationsTests: XCTestCase {
         XCTAssertEqual(notifications.badge, true)
         XCTAssertEqual(notifications.sound, true)
         XCTAssertEqual(notifications.announcement, false)
+        XCTAssertEqual(notifications.timeSensitive, true)
+        XCTAssertEqual(notifications.scheduledDelivery, false)
         XCTAssertEqual(notifications.notificationCenter, false)
         XCTAssertEqual(notifications.lockScreen, false)
         XCTAssertEqual(notifications.alertStyle, .alert)

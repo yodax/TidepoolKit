@@ -79,6 +79,8 @@ public class TControllerSettingsDatum: TDatum, Decodable {
         public let badge: Bool?
         public let sound: Bool?
         public let announcement: Bool?
+        public let timeSensitive: Bool?
+        public let scheduledDelivery: Bool?
         public let notificationCenter: Bool?
         public let lockScreen: Bool?
         public let alertStyle: AlertStyle?
@@ -89,6 +91,8 @@ public class TControllerSettingsDatum: TDatum, Decodable {
                     badge: Bool? = nil,
                     sound: Bool? = nil,
                     announcement: Bool? = nil,
+                    timeSensitive: Bool? = nil,
+                    scheduledDelivery: Bool? = nil,
                     notificationCenter: Bool? = nil,
                     lockScreen: Bool? = nil,
                     alertStyle: AlertStyle? = nil) {
@@ -98,6 +102,8 @@ public class TControllerSettingsDatum: TDatum, Decodable {
             self.badge = badge
             self.sound = sound
             self.announcement = announcement
+            self.timeSensitive = timeSensitive
+            self.scheduledDelivery = scheduledDelivery
             self.notificationCenter = notificationCenter
             self.lockScreen = lockScreen
             self.alertStyle = alertStyle
