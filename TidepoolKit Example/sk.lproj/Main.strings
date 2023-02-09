@@ -22,3 +22,6 @@
 /* Class = "UILabel"; text = "Data Set ID:"; ObjectID = "nnE-kP-79Q"; */
 "nnE-kP-79Q.text" = "ID súboru dát:";
 
+/* Class = "UILabel"; text = "Environment:"; ObjectID = "Nov-8h-4fj"; */
+"Nov-8h-4fj.text" = "Prostredie:";
+

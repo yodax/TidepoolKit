@@ -1,12 +1,12 @@
 /* Alert title confirming close of Tidepool Service view */
-"Are you sure?" = "Ste si istý?";
+"Are you sure?" = "Emin misiniz?";
 
 /* Alert button confirming close of Tidepool Service view */
-"End" = "Ukončiť";
+"End" = "Son";
 
 /* Tidepool login environment action sheet title */
-"Environment" = "Prostredie";
+"Environment" = "Çevre";
 
 /* Tidepool login button title */
-"Login" = "Prihlásiť sa";
+"Login" = "Oturum açma";
 

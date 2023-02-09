@@ -35,7 +35,7 @@
 "Login" = "Accesso";
 
 /* The text label of the authentication logout cell */
-"Logout" = "Disconnessione";
+"Logout" = "Esci";
 
 /* The title of the OK button in the error alert */
 "OK" = "OK";
