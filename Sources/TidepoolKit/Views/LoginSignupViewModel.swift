@@ -8,13 +8,13 @@
 
 import Foundation
 
-class LoginSignupViewModel: TLoginSignup {
-    weak var loginSignupDelegate: TLoginSignupDelegate?
-    var environment: TEnvironment?
+public class LoginSignupViewModel: TLoginSignup {
+    weak public var loginSignupDelegate: TLoginSignupDelegate?
+    public var environment: TEnvironment?
 
     private var api: TAPI
 
-    init(api: TAPI) {
+    public init(api: TAPI) {
         self.api = api
     }
 
