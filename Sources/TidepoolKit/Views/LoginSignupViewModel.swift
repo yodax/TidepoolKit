@@ -1,6 +1,6 @@
 //
 //  LoginSignupViewModel.swift
-//  TidepoolKitUI
+//  TidepoolKit
 //
 //  Created by Darin Krauss on 4/17/21.
 //  Copyright © 2021 Tidepool Project. All rights reserved.

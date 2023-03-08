@@ -1,6 +1,6 @@
 //
 //  TAPI+UI.swift
-//  TidepoolKitUI
+//  TidepoolKit
 //
 //  Created by Darin Krauss on 1/20/20.
 //  Copyright © 2020 Tidepool Project. All rights reserved.

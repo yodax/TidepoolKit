@@ -1,6 +1,6 @@
 //
 //  LoginSignupView.swift
-//  TidepoolKitUI
+//  TidepoolKit
 //
 //  Created by Darin Krauss on 4/17/21.
 //  Copyright © 2021 Tidepool Project. All rights reserved.
@@ -58,7 +58,7 @@ public struct LoginSignupView: View {
     }
 
     private var logo: some View {
-        Image(decorative: "TidepoolLogo", bundle: .module)
+        Image(frameworkImage: "TidepoolLogo", decorative: true)
             .resizable()
             .aspectRatio(contentMode: .fit)
             .onLongPressGesture(minimumDuration: 2) {

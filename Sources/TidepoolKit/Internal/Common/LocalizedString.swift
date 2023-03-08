@@ -1,6 +1,6 @@
 //
 //  LocalizedString.swift
-//  TidepoolKitUI
+//  TidepoolKit
 //
 //  Created by Darin Krauss on 12/10/20.
 //  Copyright © 2021 Tidepool Project. All rights reserved.

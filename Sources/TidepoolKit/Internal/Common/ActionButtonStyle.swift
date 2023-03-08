@@ -1,6 +1,6 @@
 //
 //  ActionButtonStyle.swift
-//  TidepoolKitUI
+//  TidepoolKit
 //
 //  Created by Michael Pangburn on 4/15/20.
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
