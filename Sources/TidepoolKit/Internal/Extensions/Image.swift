@@ -8,24 +8,24 @@
 
 import SwiftUI
 
-private class FrameworkBundle {
+private class LocalBundle {
     /// Returns the resource bundle associated with the current Swift module.
-    static var moduleOrFrameworkBundle: Bundle = {
+    static var main: Bundle = {
         if let mainResourceURL = Bundle.main.resourceURL,
            let bundle = Bundle(url: mainResourceURL.appendingPathComponent("TidepoolKit_TidepoolKit.bundle"))
         {
             return bundle
         }
-        return Bundle(for: FrameworkBundle.self)
+        return Bundle(for: LocalBundle.self)
     }()
 }
 
 extension Image {
     init(frameworkImage name: String, decorative: Bool = false) {
         if decorative {
-            self.init(decorative: name, bundle: FrameworkBundle.moduleOrFrameworkBundle)
+            self.init(decorative: name, bundle: LocalBundle.main)
         } else {
-            self.init(name, bundle: FrameworkBundle.moduleOrFrameworkBundle)
+            self.init(name, bundle: LocalBundle.main)
         }
     }
 }
