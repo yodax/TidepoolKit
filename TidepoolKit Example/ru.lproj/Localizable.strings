@@ -41,7 +41,7 @@
 "OK" = "ОК";
 
 /* The title for the header of the profile section */
-"Profile" = "Прогфиль";
+"Profile" = "Профиль";
 
 /* The text label of the authentication refresh cell */
 "Refresh" = "Обновить";

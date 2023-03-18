@@ -5,25 +5,25 @@
 "The email is not verified." = "De e-mail is niet geverifieerd.";
 
 /* The default localized description of the response missing JSON error */
-"The request returned an empty JSON response." = "Het verzoek heeft een leeg JSON antwoord geretourneerd.";
+"The request returned an empty JSON response." = "Het verzoek heeft een leeg JSON antwoord opgeleverd.";
 
 /* The default localized description of the response malformed JSON error */
-"The request returned an invalid JSON response." = "Het verzoek heeft een ongeldig JSON antwoord geretourneerd.";
+"The request returned an invalid JSON response." = "Het verzoek heeft een ongeldig JSON antwoord opgeleverd.";
 
 /* The default localized description of the response malformed data error */
-"The request returned an invalid response." = "Het verzoek heeft een ongeldig antwoord geretourneerd.";
+"The request returned an invalid response." = "Het verzoek heeft een ongeldig antwoord opgeleverd.";
 
 /* The default localized description of the response not authenticated error */
-"The request returned an unauthenticated response." = "Het verzoek heeft een niet-geverifieerd antwoord geretourneerd.";
+"The request returned an unauthenticated response." = "Het verzoek heeft een niet-geauthenticeerd antwoord opgeleverd.";
 
 /* The default localized description of the response unexpected JSON error */
-"The request returned an unexpected JSON response." = "Het verzoek heeft een onverwacht JSON antwoord geretourneerd.";
+"The request returned an unexpected JSON response." = "Het verzoek heeft een onverwacht JSON antwoord opgeleverd.";
 
 /* The default localized description of the response unexpected status code error */
-"The request returned an unexpected response status code." = "Het verzoek heeft een onverwachte antwoord statuscode geretourneerd.";
+"The request returned an unexpected response status code." = "Het verzoek heeft een onverwacht antwoord statuscode opgeleverd.";
 
 /* The default localized description of the response unexpected error */
-"The request returned an unexpected response." = "Het verzoek heeft een onverwacht antwoord geretourneerd.";
+"The request returned an unexpected response." = "Het verzoek heeft een onverwacht antwoord opgeleverd.";
 
 /* The default localized description of the request invalid error
    The default localized description of the request malformed error
@@ -37,7 +37,7 @@
 "The request was not authorized." = "Het verzoek is niet geautoriseerd.";
 
 /* The default localized description of the request resource not found error */
-"The requested resource was not found." = "De gevraagde hulpbron is niet gevonden.";
+"The requested resource was not found." = "De gevraagde bron is niet gevonden.";
 
 /* The default localized description of the session missing error */
 "The session is missing." = "De sessie ontbreekt.";

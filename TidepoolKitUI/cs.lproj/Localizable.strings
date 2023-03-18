@@ -1,12 +1,12 @@
 /* Alert title confirming close of Tidepool Service view */
-"Are you sure?" = "Bist Du sicher?";
+"Are you sure?" = "Potvrdit uzavření";
 
 /* Alert button confirming close of Tidepool Service view */
-"End" = "Ende";
+"End" = "Ukončit";
 
 /* Tidepool login environment action sheet title */
-"Environment" = "Umgebung";
+"Environment" = "Prostředí";
 
 /* Tidepool login button title */
-"Login" = "Anmelden";
+"Login" = "Přihlásit se";
 

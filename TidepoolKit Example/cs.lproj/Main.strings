@@ -2,13 +2,13 @@
 "3z1-wF-2wm.text" = "<environment>";
 
 /* Class = "UILabel"; text = "User ID:"; ObjectID = "7ar-3v-bPv"; */
-"7ar-3v-bPv.text" = "ID-ul utilizatorului:";
+"7ar-3v-bPv.text" = "ID uživatele:";
 
 /* Class = "UINavigationItem"; title = "TidepoolKit Example"; ObjectID = "7ZJ-S7-h1P"; */
-"7ZJ-S7-h1P.title" = "Exemplu TidepoolKit";
+"7ZJ-S7-h1P.title" = "Příklad TidepoolKit";
 
 /* Class = "UILabel"; text = "Authentication Token:"; ObjectID = "Bdv-rG-eOg"; */
-"Bdv-rG-eOg.text" = "Token de autentificare:";
+"Bdv-rG-eOg.text" = "Autentizační token:";
 
 /* Class = "UILabel"; text = "<authenticationToken>"; ObjectID = "fUM-Vk-uhD"; */
 "fUM-Vk-uhD.text" = "<authenticationToken>";
@@ -20,8 +20,8 @@
 "IkC-fw-Mnq.text" = "<userId>";
 
 /* Class = "UILabel"; text = "Data Set ID:"; ObjectID = "nnE-kP-79Q"; */
-"nnE-kP-79Q.text" = "Identificator set de date";
+"nnE-kP-79Q.text" = "ID datové sady:";
 
 /* Class = "UILabel"; text = "Environment:"; ObjectID = "Nov-8h-4fj"; */
-"Nov-8h-4fj.text" = "Mediu:";
+"Nov-8h-4fj.text" = "Prostředí:";
 

@@ -19,6 +19,9 @@
 /* The default localized description of the response unexpected JSON error */
 "The request returned an unexpected JSON response." = "Żądanie zwróciło nieoczekiwaną odpowiedź JSON.";
 
+/* The default localized description of the response unexpected status code error */
+"The request returned an unexpected response status code." = "Zadanie odrzucone. Błąd odpowiedzi.";
+
 /* The default localized description of the response unexpected error */
 "The request returned an unexpected response." = "Żądanie zwróciło nieoczekiwaną odpowiedź.";
 
@@ -35,6 +38,9 @@
 
 /* The default localized description of the request resource not found error */
 "The requested resource was not found." = "Żądany zasób nie został znaleziony.";
+
+/* The default localized description of the session missing error */
+"The session is missing." = "Brak sesji.";
 
 /* The default localized description of the request terms of service not accepted error */
 "The Terms of Service are not accepted." = "Warunki korzystania z usługi nie są akceptowane.";
