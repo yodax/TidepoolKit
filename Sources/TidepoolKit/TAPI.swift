@@ -150,7 +150,7 @@ public class TAPI {
             case .success((let response, let data, let loginResponse)):
                 if let authenticationToken = response.value(forHTTPHeaderField: "X-Tidepool-Session-Token"), !authenticationToken.isEmpty {
                     if loginResponse.termsAccepted?.isEmpty == false {     // CUSTOM: Backend does not currently explicitly check if terms are accepted
-                        self.session = TSession(environment: environment, authenticationToken: authenticationToken, userId: loginResponse.userId)
+                        self.session = TSession(environment: environment, authenticationToken: authenticationToken, userId: loginResponse.userId, email: email)
                         completion(nil)
                     } else {
                         completion(.requestTermsOfServiceNotAccepted(response, data))

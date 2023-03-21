@@ -26,9 +26,9 @@ class LoginSignupNavigationController: UINavigationController, TLoginSignup {
 
         super.init(navigationBarClass: UINavigationBar.self, toolbarClass: UIToolbar.self)
 
-        navigationBar.isTranslucent = false
-        navigationBar.barTintColor = .secondarySystemBackground
-        navigationBar.shadowImage = UIColor.clear.image()
+//        navigationBar.isTranslucent = false
+//        navigationBar.barTintColor = .secondarySystemBackground
+//        navigationBar.shadowImage = UIColor.clear.image()
 
         setViewControllers([UIHostingController(rootView: LoginSignupView(viewModel: viewModel))], animated: false)
     }
