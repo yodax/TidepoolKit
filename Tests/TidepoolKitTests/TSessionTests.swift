@@ -13,12 +13,14 @@ class TSessionTests: XCTestCase {
     static let session = TSession(environment: TEnvironmentTests.environment,
                                   authenticationToken: "test-authentication-token",
                                   userId: "1234567890",
+                                  email: "test@test.com",
                                   trace: "test-trace",
                                   createdDate: Date.test)
     static let sessionJSONDictionary: [String: Any] = [
         "environment": TEnvironmentTests.environmentJSONDictionary,
         "authenticationToken": "test-authentication-token",
         "userId": "1234567890",
+        "email": "test@test.com",
         "trace": "test-trace",
         "createdDate": Date.testJSONString
     ]
