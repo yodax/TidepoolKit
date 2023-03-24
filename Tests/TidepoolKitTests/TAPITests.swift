@@ -206,7 +206,7 @@ class TAPIInfoTests: TAPITests {
 
     func testSuccessUsingSessionEnvironment() {
         let env = TEnvironment(host: "foo.bar.baz", port: 123)
-        let session = TSession(environment: env, authenticationToken: authenticationToken, userId: userId)
+        let session = TSession(environment: env, authenticationToken: authenticationToken, userId: userId, email: "test@test.com")
         api.session = session
         URLProtocolMock.handlers = [URLProtocolMock.Handler(validator: URLProtocolMock.Validator(url: "http://foo.bar.baz:123/info", method: "GET"),
                                                             success: URLProtocolMock.Success(statusCode: 200, body: TAPIInfoTests.info))]
@@ -235,7 +235,7 @@ class TAPISessionTests: TAPITests {
     override func setUp() {
         super.setUp()
 
-        session = TSession(environment: environment, authenticationToken: authenticationToken, userId: userId)
+        session = TSession(environment: environment, authenticationToken: authenticationToken, userId: userId, email: "test@test.com")
         headers = ["X-Tidepool-Session-Token": authenticationToken, "X-Tidepool-Trace-Session": session.trace!]
         refreshHandler = URLProtocolMock.Handler(validator: URLProtocolMock.Validator(url: "https://test.org/auth/login", method: "GET", headers: headers),
                                                  success: URLProtocolMock.Success(statusCode: 200, headers: ["X-Tidepool-Session-Token": refreshAuthenticationToken]))
@@ -1023,6 +1023,6 @@ class TAPIVerifyAppTests: TAPIRefreshSessionTests {
 
 fileprivate extension TSession {
     init(session: TSession, createdDate: Date) {
-        self.init(environment: session.environment, authenticationToken: session.authenticationToken, userId: session.userId, trace: session.trace, createdDate: createdDate)
+        self.init(environment: session.environment, authenticationToken: session.authenticationToken, userId: session.userId, email: "test@test.com", trace: session.trace, createdDate: createdDate)
     }
 }
