@@ -560,8 +560,9 @@ public class TAPI {
         var request = createRequest(method: method, path: path)
         request?.setValue("application/json; charset=utf-8", forHTTPHeaderField: HTTPHeaderField.contentType.rawValue)
         do {
-            logging?.debug("Sending: " + (String(data: (try? JSONEncoder.tidepool.encode(body)) ?? Data(), encoding: .utf8) ?? "invalid request"))
-            request?.httpBody = try JSONEncoder.tidepool.encode(body)
+            let encoded = try JSONEncoder.tidepool.encode(body)
+            logging?.debug("Sending: " + (String(data: encoded, encoding: .utf8) ?? "invalid request"))
+            request?.httpBody = encoded
         } catch let error {
             logging?.error("Failure encoding request body [\(error)]")
             return nil
