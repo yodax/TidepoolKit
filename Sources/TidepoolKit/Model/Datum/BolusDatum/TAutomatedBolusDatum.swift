@@ -15,9 +15,7 @@ public class TAutomatedBolusDatum: TBolusDatum, Decodable {
     public init(time: Date, normal: Double, expectedNormal: Double? = nil, insulinFormulation: InsulinFormulation? = nil) {
         self.normal = normal
         self.expectedNormal = expectedNormal
-        // PS: Tidepool backend does not currently support automated as a subtype.
-        // And the automated flag should probably be on a separate, orthogonal attribute.
-        super.init(.normal, time: time, insulinFormulation: insulinFormulation)
+        super.init(.automated, time: time, insulinFormulation: insulinFormulation)
     }
 
     public required init(from decoder: Decoder) throws {
