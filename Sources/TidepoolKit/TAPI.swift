@@ -248,6 +248,23 @@ public class TAPI {
         performRequest(request, completion: completion)
     }
 
+    // MARK: - Users
+
+    /// List all users who have trustee or trustor access to the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id for which to get the profile. If no user id is specified, then the session user id is used.
+    ///   - completion: The completion function to invoke with any error.
+    public func getUsers(userId: String? = nil, completion: @escaping (Result<[TTrusteeUser], TError>) -> Void) {
+        guard let session = session else {
+            completion(.failure(.sessionMissing))
+            return
+        }
+
+        let request = createRequest(method: "GET", path: "/metadata/users/\(userId ?? session.userId)/users")
+        performRequest(request, completion: completion)
+    }
+
     // MARK: - Prescriptions
 
     /// Claim the prescription for the session user id.

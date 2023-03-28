@@ -21,6 +21,7 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		C16119D329D2863200E70E5E /* TTrusteeUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16119D229D2863200E70E5E /* TTrusteeUser.swift */; };
 		C16DA94529B8CDF400CC3610 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C16DA93E29B8CB6400CC3610 /* Assets.xcassets */; };
 		C19C9F5229CA0E6D00A6D3D0 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C19C9F5429CA0E6D00A6D3D0 /* Localizable.strings */; };
 		OBJ_181 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* JSONDecoder.swift */; };
@@ -201,6 +202,7 @@
 		C15ADC6C29CA17C5008D80F1 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C15ADC6D29CA17CB008D80F1 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C15ADC6E29CA17D1008D80F1 /* sk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sk; path = sk.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C16119D229D2863200E70E5E /* TTrusteeUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TTrusteeUser.swift; sourceTree = "<group>"; };
 		C16DA93E29B8CB6400CC3610 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C1B1539429CA264600563369 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		OBJ_10 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
@@ -625,6 +627,7 @@
 				OBJ_88 /* TLocation.swift */,
 				OBJ_89 /* TOrigin.swift */,
 				OBJ_90 /* TProfile.swift */,
+				C16119D229D2863200E70E5E /* TTrusteeUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -941,6 +944,7 @@
 				OBJ_238 /* TPrescription.swift in Sources */,
 				OBJ_239 /* TPrescriptionClaim.swift in Sources */,
 				OBJ_240 /* TAssociation.swift in Sources */,
+				C16119D329D2863200E70E5E /* TTrusteeUser.swift in Sources */,
 				OBJ_241 /* TBloodGlucose.swift in Sources */,
 				OBJ_242 /* TCarbohydrate.swift in Sources */,
 				OBJ_243 /* TDataSet.swift in Sources */,
