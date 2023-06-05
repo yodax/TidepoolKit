@@ -33,6 +33,7 @@
 		C1A6210D29EC840F00B5A073 /* TUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A6210C29EC840F00B5A073 /* TUser.swift */; };
 		C1A85A9E2A1CFDB800430101 /* TPermissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A85A9D2A1CFDB800430101 /* TPermissions.swift */; };
 		C1C9414429EEDC55008D3E05 /* ProviderConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C9414229EEDC54008D3E05 /* ProviderConfiguration.swift */; };
+		E086D1D02A2E4EEF00BA2ED4 /* TPendingInvite.swift in Sources */ = {isa = PBXBuildFile; fileRef = E086D1CF2A2E4EEF00BA2ED4 /* TPendingInvite.swift */; };
 		OBJ_181 /* JSONDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* JSONDecoder.swift */; };
 		OBJ_182 /* JSONEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_11 /* JSONEncoder.swift */; };
 		OBJ_183 /* ActionButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* ActionButtonStyle.swift */; };
@@ -219,6 +220,7 @@
 		C1A85A9D2A1CFDB800430101 /* TPermissions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TPermissions.swift; sourceTree = "<group>"; };
 		C1B1539429CA264600563369 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C1C9414229EEDC54008D3E05 /* ProviderConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProviderConfiguration.swift; sourceTree = "<group>"; };
+		E086D1CF2A2E4EEF00BA2ED4 /* TPendingInvite.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TPendingInvite.swift; sourceTree = "<group>"; };
 		OBJ_10 /* JSONDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoder.swift; sourceTree = "<group>"; };
 		OBJ_103 /* JSONDecoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONDecoderTests.swift; sourceTree = "<group>"; };
 		OBJ_104 /* JSONEncoderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONEncoderTests.swift; sourceTree = "<group>"; };
@@ -645,6 +647,7 @@
 				OBJ_90 /* TProfile.swift */,
 				C16119D229D2863200E70E5E /* TTrusteeUser.swift */,
 				C18A08EA2A0DD04E005A41FE /* TInvite.swift */,
+				E086D1CF2A2E4EEF00BA2ED4 /* TPendingInvite.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -918,6 +921,7 @@
 				C17CDEE92A01378A003F4C84 /* TokenResponse.swift in Sources */,
 				C17CDEEB2A01378A003F4C84 /* OAuth2Authenticator.swift in Sources */,
 				OBJ_197 /* DataResponse.swift in Sources */,
+				E086D1D02A2E4EEF00BA2ED4 /* TPendingInvite.swift in Sources */,
 				OBJ_198 /* LegacyResponse.swift in Sources */,
 				OBJ_199 /* LoginResponse.swift in Sources */,
 				OBJ_200 /* UnfairLock.swift in Sources */,
