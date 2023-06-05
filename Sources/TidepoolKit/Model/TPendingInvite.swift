@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TTPendingInvite: Codable, Equatable {
+public struct TPendingInvite: Codable, Equatable {
     public let key: String
     public let type: String
     public let status: String

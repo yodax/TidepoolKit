@@ -344,8 +344,8 @@ public actor TAPI {
     ///
     /// - Parameters:
     ///   - userId: The user id for which to get the pending invites. If no user id is specified, then the session user id is used.
-    /// - Returns: A list of ``TTPendingInvite`` structures
-    public func getPendingInvites(userId: String? = nil) async throws -> [TTPendingInvite] {
+    /// - Returns: A list of ``TPendingInvite`` structures
+    public func getPendingInvites(userId: String? = nil) async throws -> [TPendingInvite] {
         guard let session = session else {
             throw TError.sessionMissing
         }
