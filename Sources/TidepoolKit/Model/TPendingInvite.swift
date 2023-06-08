@@ -16,10 +16,10 @@ public struct TPendingInvite: Codable, Equatable {
     public let created: Date
     public let modified: Date
 //    public let creator: TCreator
-    public let context: String
+//    public let context: String
 //    public let restrictions: TRestrictions
     
-    init(key: String, type: String, status: String, email: String, creatorId: String, created: Date, modified: Date, context: String) {
+    init(key: String, type: String, status: String, email: String, creatorId: String, created: Date, modified: Date) {
         self.key = key
         self.type = type
         self.status = status
@@ -27,6 +27,5 @@ public struct TPendingInvite: Codable, Equatable {
         self.creatorId = creatorId
         self.created = created
         self.modified = modified
-        self.context = context
     }
 }
