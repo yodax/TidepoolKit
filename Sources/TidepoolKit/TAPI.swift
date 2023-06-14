@@ -353,6 +353,21 @@ public actor TAPI {
         let request = try createRequest(method: "GET", path: "/confirm/invite/\(userId ?? session.userId)")
         return try await performRequest(request)
     }
+    
+    /// Cancel a pending invite for access to the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id. If no user id is specified, then the session user id is used.
+    ///   - invitedByEmail: The email that has been invited.
+    /// - Returns: A confirmation/response
+    public func cancelInvite(userId: String? = nil, invitedByEmail: String) async throws -> String {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "PUT", path: "/confirm/\(userId ?? session.userId)/invited/\(invitedByEmail)")
+        return try await performRequest(request)
+    }
 
 
 
