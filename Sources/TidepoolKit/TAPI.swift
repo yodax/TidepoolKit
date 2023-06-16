@@ -397,6 +397,24 @@ public actor TAPI {
         let request = try createRequest(method: "PUT", path: "/confirm/accept/invite/\(userId ?? session.userId)/\(invitedByUserId)")
         return try await performRequest(request)
     }
+    
+    /// Update permissions of individual user userId in group sharerId.
+    /// The permissions provided in the request body replace all existing permissions for that user.
+    /// Therefore to delete a permission, submit the request body without that permission.
+    ///
+    /// - Parameters:
+    ///   - sharerId: The user id of the user sharing. If no user id is specified, then the session user id is used.
+    ///   - userId: The user id of the user being shared with.
+    ///   - permissions: A `TPermissions` structure for the user being shared with.
+    /// - Returns: A confirmation/response
+    public func grantPermissionsInGroup(sharerId: String? = nil, userId: String, permissions: TPermissions) async throws -> String {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "POST", path: "/access/\(sharerId ?? session.userId)/\(userId)", body: permissions)
+        return try await performRequest(request)
+    }
 
 
     // MARK: - Prescriptions
