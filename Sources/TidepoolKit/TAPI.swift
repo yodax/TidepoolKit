@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AppAuth
 import UIKit
 
 /// Observer of the Tidepool API
@@ -69,11 +68,6 @@ public actor TAPI {
 
     var redirectURL: URL
 
-    var authorization: Authorization
-    func setAuthorization(_ authorization: Authorization) {
-        self.authorization = authorization
-    }
-
     /// Create a new instance of TAPI. Automatically lookup additional environments in the background.
     ///
     /// - Parameters:
@@ -85,7 +79,6 @@ public actor TAPI {
         self.redirectURL = redirectURL
         self.urlSessionConfiguration = TAPI.defaultURLSessionConfiguration
         self.session = session
-        self.authorization = AppAuthAuthorization()
     }
 
     /// Start observing the API.
@@ -204,58 +197,6 @@ public actor TAPI {
         }
     }
 
-    /// Login to the Tidepool environment using AppAuth (OAuth2/OpenID-Connect)
-    /// used internally by the LoginSignupViewController.
-    ///
-    /// - Parameters:
-    ///   - environment: The environment to login.
-    ///   - presenting: A UIViewController to present the login modal from. Can be UIApplication.shared.windows.first!.rootViewController!
-    public func login(environment: TEnvironment, presenting: UIViewController) async throws {
-
-        let config = try await lookupOIDConfiguration(environment: environment)
-
-        guard let oidConfig = OIDServiceConfiguration(from: config) else {
-            throw TError.missingAuthenticationConfiguration
-        }
-
-        let request = OIDAuthorizationRequest(
-            configuration: oidConfig,
-            clientId: self.clientId,
-            clientSecret: nil,
-            scopes: ["openid", "offline_access"],
-            redirectURL: self.redirectURL,
-            responseType: OIDResponseTypeCode,
-            additionalParameters: [:]
-        )
-
-        let authState: any AuthorizationState
-
-        do {
-            authState = try await authorization.presentAuth(request: request, presenting: presenting)
-        } catch {
-            let authError = error as NSError
-            if authError.domain == OIDGeneralErrorDomain {
-                if authError.code == -3 /* OIDErrorCodeUserCanceledAuthorizationFlow */ ||
-                    authError.code == -4 /* OIDErrorCodeProgramCanceledAuthorizationFlow */
-                {
-                    throw TError.loginCanceled
-                }
-            }
-            throw error
-        }
-
-        guard let accessToken = authState.accessToken else
-        {
-            throw TError.missingAuthenticationToken
-        }
-
-        try await createSession(
-            environment: environment,
-            accessToken: accessToken,
-            accessTokenExpiration: authState.accessTokenExpirationDate,
-            refreshToken: authState.refreshToken)
-    }
-
     public func createSession(environment: TEnvironment, accessToken: String, accessTokenExpiration: Date?, refreshToken: String?) async throws {
         self.logging?.debug("Authorization successful, access token: \(accessToken)")
 
@@ -272,11 +213,6 @@ public actor TAPI {
             refreshToken: refreshToken,
             userId: currentUser.userid,
             username: currentUser.username)
-    }
-
-    private func basicAuthorizationFromCredentials(email: String, password: String) -> String {
-        let encodedCredentials = Data("\(email):\(password)".utf8).base64EncodedString()
-        return "Basic \(encodedCredentials)"
     }
 
     /// Refresh the Tidepool API session.
@@ -296,35 +232,47 @@ public actor TAPI {
 
         let config = try await lookupOIDConfiguration(environment: session.environment)
 
-        guard let oidConfig = OIDServiceConfiguration(from: config) else {
+        var components = URLComponents()
+        components.queryItems = [
+            URLQueryItem(name:"refresh_token", value: refreshToken),
+            URLQueryItem(name:"grant_type", value: "refresh_token"),
+            URLQueryItem(name:"client_id", value: clientId),
+        ]
+
+        guard let endpoint = URL(string: config.tokenEndpoint) else {
+            self.session = nil
+
             throw TError.missingAuthenticationConfiguration
         }
 
-        let request = OIDTokenRequest(
-            configuration: oidConfig,
-            grantType: OIDGrantTypeRefreshToken,
-            authorizationCode: nil,
-            redirectURL: nil,
-            clientID: self.clientId,
-            clientSecret: nil,
-            scope: nil,
-            refreshToken: refreshToken,
-            codeVerifier: nil,
-            additionalParameters: nil)
+        var request = URLRequest(url: endpoint)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = components.query?.data(using: .utf8)
 
+        let (data, response) = try await urlSession.data(for: request)
 
-        let tokenResponse = try await authorization.requestToken(request)
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw TError.responseUnexpected(response, data)
+        }
 
-        if let newAccessToken = tokenResponse.accessToken {
+        if httpResponse.statusCode == 401 {
+            throw TError.requestNotAuthenticated
+        }
+
+        do {
+            print("Received \(String(data: data, encoding: .utf8)!)")
+            let tokenResponse = try JSONDecoder().decode(TokenResponse.self, from: data)
             self.session = TSession(
                 environment: session.environment,
-                accessToken: newAccessToken,
-                accessTokenExpiration: tokenResponse.accessTokenExpirationDate,
+                accessToken: tokenResponse.accessToken,
+                accessTokenExpiration: nil, // tokenResponse.accessTokenExpirationDate,
                 refreshToken: tokenResponse.refreshToken,
                 userId: session.userId,
                 username: session.username)
+        } catch {
+            throw TError.responseMalformedJSON(httpResponse, data, error)
         }
-        
     }
 
     /// Logout the Tidepool API session.
@@ -391,7 +339,82 @@ public actor TAPI {
         let request = try createRequest(method: "POST", path: "confirm/send/invite/\(userId ?? session.userId)", body: request)
         return try await performRequest(request)
     }
+    
+    /// List all pending invites sent from the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id for which to get the pending invites. If no user id is specified, then the session user id is used.
+    /// - Returns: A list of ``TPendingInvite`` structures
+    public func getPendingInvitesSent(userId: String? = nil) async throws -> [TPendingInvite] {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
 
+        let request = try createRequest(method: "GET", path: "/confirm/invite/\(userId ?? session.userId)")
+        return try await performRequest(request)
+    }
+    
+    /// List all pending invites received by the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id for which to get the pending invites. If no user id is specified, then the session user id is used.
+    /// - Returns: A list of ``TPendingInvite`` structures
+    public func getPendingInvitesReceived(userId: String? = nil) async throws -> [TPendingInvite] {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "GET", path: "/confirm/invitations/\(userId ?? session.userId)")
+        return try await performRequest(request)
+    }
+    
+    /// Cancel a pending invite for access to the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id. If no user id is specified, then the session user id is used.
+    ///   - invitedByEmail: The email that has been invited.
+    /// - Returns: A confirmation/response
+    public func cancelInvite(userId: String? = nil, invitedByEmail: String) async throws -> String {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "PUT", path: "/confirm/\(userId ?? session.userId)/invited/\(invitedByEmail)")
+        return try await performRequest(request)
+    }
+    
+    /// Accept a pending invite sent to the user account identified by userId. If no user id is specified, then the session user id is used.
+    ///
+    /// - Parameters:
+    ///   - userId: The user id. If no user id is specified, then the session user id is used.
+    ///   - invitedByUserId: The user id of the user that sent the invited.
+    /// - Returns: A confirmation/response
+    public func acceptInvite(userId: String? = nil, invitedByUserId: String) async throws -> String {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "PUT", path: "/confirm/accept/invite/\(userId ?? session.userId)/\(invitedByUserId)")
+        return try await performRequest(request)
+    }
+    
+    /// Update permissions of individual user userId in group sharerId.
+    /// The permissions provided in the request body replace all existing permissions for that user.
+    /// Therefore to delete a permission, submit the request body without that permission.
+    ///
+    /// - Parameters:
+    ///   - sharerId: The user id of the user sharing. If no user id is specified, then the session user id is used.
+    ///   - userId: The user id of the user being shared with.
+    ///   - permissions: A `TPermissions` structure for the user being shared with.
+    /// - Returns: A confirmation/response
+    public func grantPermissionsInGroup(sharerId: String? = nil, userId: String, permissions: TPermissions) async throws -> String {
+        guard let session = session else {
+            throw TError.sessionMissing
+        }
+
+        let request = try createRequest(method: "POST", path: "/access/\(sharerId ?? session.userId)/\(userId)", body: permissions)
+        return try await performRequest(request)
+    }
 
 
     // MARK: - Prescriptions
@@ -778,19 +801,8 @@ public actor TAPI {
     }
 
     private func refreshSessionAndPerformRequest(_ request: URLRequest?) async throws -> (HTTPURLResponse, Data?) {
-        do {
-            try await refreshSession()
-        } catch {
-            let tokenError = error as NSError
-            if tokenError.domain == OIDOAuthTokenErrorDomain {
-                let errorCode = tokenError.userInfo[OIDOAuthErrorResponseErrorKey] ?? "unknown";
-                logging?.error("Auth error while refreshing token: \(errorCode) \(error.localizedDescription)")
-                self.session = nil
-            } else {
-                logging?.error("Error refreshing token: \(error.localizedDescription)")
-            }
-            throw TError.requestNotAuthenticated
-        }
+        try await refreshSession()
+
         guard let session = self.session else {
             throw TError.sessionMissing
         }
