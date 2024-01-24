@@ -340,6 +340,7 @@ public class TPumpSettingsDatum: TDatum, Decodable {
             case other
             case rapidAdult
             case rapidChild
+            case rapidChildExtDia
             case walsh
         }
 
